@@ -1,80 +1,61 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include<iostream>
-#include<queue>
+#include<vector>
+#include<algorithm>
 
 using namespace std;
 
-int visitedarr[10005][505];
-int dx = 1;
-int dy[3] = { -1,0,1 };
-queue<int> Q;
+int visited[10000][500];
+int map[10000][500];
+int dx[3] = { -1,0,1 };
+int dy[3] = { 1,1,1 };
+bool check; // 가스관 도달여부
+int cnt = 0;
+int R, C;
 
-bool visited(int a, int b);
-void print_arr(int R, int C);
+void dfs(int a, int b) {
+	//cout << "dfs: " << a << " " << endl;
+	visited[a][b] = 1;
+	if (b == C - 1) {
+		cnt++;
+		check = true;
+		return;
+	}
+	for (int i = 0; i < 3; i++) {
+		int next_x = a + dx[i];
+		int next_y = b + dy[i];
+		if (next_x >= 0 && next_x < R && next_y >= 0 && next_y < C) {
+			if (!visited[next_x][next_y] && map[next_x][next_y] != 1) {
+				dfs(next_x, next_y);
+				if (check) return;
+			}
+		}
+	}
+}
 
-int main(){
-	freopen("input.txt", "r", stdin);
-	int R, C;
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	//freopen("3109input/plinovod6.txt", "r", stdin);
 	cin >> R >> C;
-	for (int i = 0; i < R; i++) {
-		for (int j = 0; j < C; j++) {
-			char input;
-			cin >> input;
-			if (input == 'x') visitedarr[i][j] = 1;
+
+	for (int i = 0; i < R; i++)
+		for (int j = 0; j < C; j++)
+		{
+			char c;
+			cin >> c;
+			if (c == 'x') map[i][j] = 1;
+			else map[i][j] = 0;
 		}
+
+	for (int i = 0; i < R; i++)
+	{
+		check = false;
+		dfs(i, 0);
 	}
-	print_arr(R, C);
-	int ans = 0;
-	for (int i = 0; i < R; i++) {
-		cout << "i: " << i << endl;
-		int nx = 0, ny = i;
-		bool flag = false;
-		while (nx != C - 1) {
-			//cout << "nx: " << nx << " ny: " << ny << endl;
-			flag = false;
-			for (int j = 0; j < 3; j++) { 
-				if (!visited(ny + dy[j], nx + dx) && ny + dy[j] > -1 && ny + dy[j] < R) {
-					nx += dx;
-					ny += dy[j];
-					Q.push(ny);
-					flag = true;
-					printf("%d %d 방문\n", ny, nx);
-					break;
-				}
-			}
-			if (!flag) continue; //진행이 안된경우
-		}
-		if (flag) { //끝까지 진행이 된 경우
-			int k = 1;
-			while (!Q.empty()) {
-				visitedarr[Q.front()][k] = 1;
-				Q.pop();
-				k++;
-			}
-			ans++;
-			print_arr(R, C);
-		}
-		else { //중간에 멈춘 경우
-			cout << "중간에 멈춰서 Q를 비움!" << endl;
-			while (!Q.empty()) {
-				Q.pop();
-			}
-		}
-	}
-	cout << ans;
-	return 0;
+
+	cout << cnt;
 }
 
-bool visited(int a, int b) {
-	if (visitedarr[a][b] == 1) return true;
-	else return false;
-}
-
-void print_arr(int R, int C) {
-	for (int i = 0; i < R; i++) {
-		for (int j = 0; j < C; j++) {
-			cout << visitedarr[i][j]<<" ";
-		}
-		cout << endl;
-	}
-}
