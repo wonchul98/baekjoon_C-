@@ -39,5 +39,11 @@
     <ClCompile Include="15684.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\baekjoon_1780\baekjoon_1780\1780.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\baekjoon_1005\baekjoon_1005\1005.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
