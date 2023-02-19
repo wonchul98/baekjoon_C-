@@ -3,7 +3,7 @@
 using namespace std;
 
 int max_idx = 1;
-int main_branch[1000001] = {0,};
+int main_branch[1000001];
 int N;
 
 struct node {
@@ -36,7 +36,7 @@ public:
 
 private:
 	void p_insert(node* n, int idx, int val) {
-		//cout << "inserting: " << val << "index: " << idx << endl;
+		//if(max_idx>3500) cout << "inserting: " << val << "index: " << idx << endl;
 		node* temp;
 		temp = (node*)calloc(1, sizeof(node));
 		temp->value = val;
@@ -77,10 +77,10 @@ private:
 				n->right = temp;
 				temp->parent = n;
 				temp->index = ++idx;
-				if (max_idx > 3500) printf("temp: %d, temp->parent: %d, idx: %d\n", temp->value, temp->parent->value, idx);
+				//if (max_idx > 3500) printf("temp: %d, temp->parent: %d, idx: %d\n", temp->value, temp->parent->value, idx);
 				if (idx > max_idx) {
 					max_idx = idx;
-					if(max_idx > 3500)cout << "max_idx 갱신: " << max_idx << endl;
+					//if(max_idx > 3500)cout << "max_idx 갱신: " << max_idx << endl;
 					write(temp);
 				}
 			}
@@ -91,7 +91,7 @@ private:
 		}
 	}
 	void p_del_inorder(node* n) {
-		//printf("del(%d)\n", n->value);
+		//if (max_idx > 3500) printf("inorder del(%d)\n", n->value);
 		if (n->left != nullptr) { p_del_inorder(n->left); }
 		if (n->right != nullptr) { p_del_inorder(n->right); }
 		free(n);
@@ -124,14 +124,16 @@ private:
 		return true;
 	}
 	void write(node *n) {
+		//if (max_idx > 3500) cout << "write func: " << n->value << endl;
 		while (n->parent != nullptr) {
 			if (max_idx > 3500)cout << "n->val: " << n->value << " " << n->index << endl;
 			if (!isleftchild(n)) {
-				if (max_idx > 3500) cout << "write" << endl;
-				if (main_branch[n->index] == n->value) break;
-				if (max_idx > 3500) cout << "write" << endl;
+				//if (max_idx > 3500) cout << "write" << endl;
+				if (main_branch[n->index] == n->value) break; //이미 적으려는게 이미 있으면
+				//if (max_idx > 3500) cout << "write" << endl;
+				//if (max_idx > 3500) printf("main_branch[%d]: %d\n", n->index, n->value);
 				main_branch[n->index] = n->value;
-				if (max_idx > 3500) printf("main_branch[%d]: %d\n", n->index, n->value);
+				//if (max_idx > 3500) printf("main_branch[%d]: %d\n", n->index, n->value);
 			}
 			else {
 				if (n->parent->right != nullptr) {
@@ -159,10 +161,10 @@ int main() {
 		cin >> input;
 		maintree.insert(input);
 	}
-	for (int i = 1; i <= max_idx; i++) {
+	/*for (int i = 1; i <= max_idx; i++) {
 		cout << main_branch[i] << " ";
-	}
-	cout << endl;
+	}*/
+	cout << max_idx << endl;
 	return 0;
 }
 
