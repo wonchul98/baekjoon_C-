@@ -45,6 +45,7 @@ int dp_f(bitset<16>vi, bitset<16> A) {
 			//cout << "A:" << A << " j(경유지) : " << j+1 << " vj : " << vj << endl;
 			bitset<16> A_vj(A & ~vj);
 			//cout << "j갔다가 갈 곳들: " << A_vj << endl;
+			if (map[i][j + 1] > minimum) return INF;
 			int rst = dp_f(vj, A_vj);
 			//cout << "so rst: " << rst <<endl;
 			minimum = min(minimum, map[i][j+1]+ rst);
