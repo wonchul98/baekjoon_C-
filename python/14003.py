@@ -6,7 +6,7 @@ main_branch = [-float('inf')]
 dp = [0]*(N+1)
 
 for i in range(1,N+1):
-    if(arr[i] > main_branch[-1]):
+if(arr[i] > main_branch[-1]):
         main_branch.append(arr[i])
         dp[i] = len(main_branch)-1
     else:
