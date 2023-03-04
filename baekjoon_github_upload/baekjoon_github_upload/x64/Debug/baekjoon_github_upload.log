@@ -1,3 +1,2 @@
-﻿  2098.cpp
-C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\2098.cpp(51,23): warning C4334: '<<': 32비트 시프트의 결과가 암시적으로 64비트로 변환됩니다. 64비트 시프트를 사용하시겠습니까?
-  baekjoon_github_upload.vcxproj -> C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\x64\Debug\baekjoon_github_upload.exe
+﻿  9084.cpp
+  baekjoon_github_upload.vcxproj -> C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\x64\Debug\baekjoon_github_upload.exe
