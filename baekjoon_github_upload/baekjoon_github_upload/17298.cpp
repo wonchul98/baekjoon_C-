@@ -1,30 +1,32 @@
 #include<iostream>
-#include<vector>
+#include<stack>
 using namespace std;
-
 int N;
-vector<int> v;
-int NGE(int a);
+int arr[1000000];
+int rst[1000000];
+stack<int> s;
 
 int main() {
-	ios::sync_with_stdio(false);
 	cin >> N;
-	int input;
 	for (int i = 0; i < N; i++) {
-		cin >> input;
-		v.push_back(input);
+		cin >> arr[i];
 	}
-	for (int i = 0; i < N; i++) {
-		cout << NGE(i) << " ";
-	}
-}
-
-int NGE(int a) {
-	for (int i = a+1; i < N; i++) {
-		if (v.at(i) > v.at(a)) {
-			return v.at(i);
+	for (int i = N - 1; i >= 0; i--) {
+		while (!s.empty() && s.top() <= arr[i]) { //s에 뭔가 있음 + s맨위보다 arr[i]가 더 큼
+			s.pop();
 		}
-		
+		if (s.empty()) {
+			rst[i] = -1;
+			s.push(arr[i]);
+			continue;
+		}
+		else { //s.top() > arr[i]
+			rst[i] = s.top();
+		}
+		s.push(arr[i]);
 	}
-	return -1;
+	for (int i = 0; i < N; i++) {
+		cout << rst[i] << " ";
+	}
+	return 0;
 }
