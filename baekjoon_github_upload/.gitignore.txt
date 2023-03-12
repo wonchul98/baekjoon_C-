@@ -32,9 +32,17 @@
 *.app
 
 # etc
+*.ilk
 
 #Visual Studio
 *.vcxproj*
 *.filters*
 *.user*
 *Debug*
+
+# Log files
+*.tlog
+
+
+# Visual C++ cache files
+ipch/
