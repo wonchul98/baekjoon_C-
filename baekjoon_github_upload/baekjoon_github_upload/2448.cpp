@@ -9,9 +9,14 @@ void draw(int size, int height, int len);
 int main() {
 	int s;
 	cin >> s;
+	for (int i = 1; i <= s; i++) {
+		for (int j = 1; j <= 2*s; j++) {
+			map[i][j] = ' ';
+		}
+	}
 	draw(s, s, s);
 	for (int i = s; i > 0; i--) {
-		for (int j = s; j > 0; j--) {
+		for (int j = 2*s; j > 0; j--) {
 			cout << map[i][j];
 		}
 		cout << endl;
@@ -21,7 +26,7 @@ int main() {
 }
 
 void draw(int size, int height, int len) {
-	printf("draw(%d, %d, %d)\n", size, height, len);
+	//printf("draw(%d, %d, %d)\n", size, height, len);
 	if (size == 3) {
 		map[height][len] = '*';
 		map[height - 1][len - 1] = '*';
