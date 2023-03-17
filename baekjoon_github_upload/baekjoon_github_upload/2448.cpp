@@ -2,7 +2,7 @@
 
 using namespace std;
 
-char map[3100][5300];
+char map[3100][6200];
 
 void draw(int size, int height, int len);
 
@@ -16,7 +16,7 @@ int main() {
 	}
 	draw(s, s, s);
 	for (int i = s; i > 0; i--) {
-		for (int j = 2*s; j > 0; j--) {
+		for (int j = 2*s-1; j > 0; j--) {
 			cout << map[i][j];
 		}
 		cout << endl;
