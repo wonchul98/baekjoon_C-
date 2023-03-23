@@ -99,5 +99,14 @@
     <ClCompile Include="1007_fail.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="7490.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="10872.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="15654.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
