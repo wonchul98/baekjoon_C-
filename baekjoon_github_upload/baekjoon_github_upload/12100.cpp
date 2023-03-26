@@ -22,11 +22,6 @@ int main() {
 	return 0;
 }
 void dfs(int n, int d) {
-	//printf("dfs(%d, %d)\n", n, d);
-	//if (d == 0)cout << "←" << endl;
-	//if (d == 1)cout << "→" << endl;
-	//if (d == 2)cout << "↓" << endl;
-	//if (d == 3)cout << "↑" << endl;
 	if (n > 5) return;
 	bool move = false;
 	int save[21][21];
@@ -36,15 +31,7 @@ void dfs(int n, int d) {
 			save[i][j] = arr[i][j];
 		}
 	}
-	if (print) {
-		cout << "======start======" << endl;
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				cout << arr[i][j] << " ";
-			}
-			cout << "\n";
-		}
-	}
+
 	/*연산*/
 	for (int i = 0; i < N; i++) {
 		bool zero = false;
@@ -77,7 +64,6 @@ void dfs(int n, int d) {
 				else if (!zero) zero = true;
 			}
 		}
-		//now_v 출력
 		s = 0;
 		for (int j = 0; j < now_v.size(); j++) {
 			if (!s) { //s가 0이면
@@ -135,18 +121,9 @@ void dfs(int n, int d) {
 			}
 		}
 	}
-	/*연산*/
-	if (print) {
-		cout << "======result======" << endl;
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				cout << arr[i][j] << " ";
-			}
-			cout << "\n";
-		}
-	}
+	/*연산 끝*/
+
 	if (!move) {  
-		//cout << "not moved" << endl;
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				arr[i][j] = save[i][j];
@@ -158,6 +135,7 @@ void dfs(int n, int d) {
 		for (int i = 0; i < 4; i++) {
 			dfs(n+1, i);
 		}
+		/*백트레킹*/
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				arr[i][j] = save[i][j];
