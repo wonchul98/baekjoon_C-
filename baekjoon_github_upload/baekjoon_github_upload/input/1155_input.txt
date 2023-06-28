@@ -1,0 +1,2 @@
+30
+AB AC BA BC CA CB
