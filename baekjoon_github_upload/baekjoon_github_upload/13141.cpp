@@ -9,25 +9,23 @@ int N, M;
 int lines[201][201];
 int dist[201][201];
 vector<pair<int, int>> gen_lines;
+
 int main() {
 	freopen("input/13141_input.txt", "r", stdin);
 	cin >> N >> M;
-	cout << N << M << endl;
 	for (int i = 0; i < M; i++) {
 		int start, end, length;
 		cin >> start >> end >> length;
 		gen_lines.push_back(make_pair(start, end));
-		lines[start][end] = length;
-		lines[end][start] = length;
+		lines[start][end] = min(length, lines[start][end]);
+		lines[end][start] = min(length, lines[end][start]);
+		
 	}
 
 	for (int i = 1; i <= N; i++) {
 		for (int j = 1; j <= N; j++) {
 			if (i == j) dist[i][j] = 0;
-			else if (lines[i][j]!=0) {
-				if (dist[i][j]) dist[i][j] = min(dist[i][j], lines[i][j]);
-				else dist[i][j] = lines[i][j];
-			}
+			else if(lines[i][j]) dist[i][j] = lines[i][j];
 			else dist[i][j] = INF; //간선이 없는 경우
 		}
 	}
@@ -72,14 +70,17 @@ int main() {
 				near = dist[s][one];
 				far = dist[s][two];
 			}
-			max_len = max(max_len, near + ((far - near) + lines[one][two]) / 2);
-			printf("one: %d, two: %d, near: %2f, far: %2f, max_len: %2f\n", one, two, near, far, max_len);
+			float len = (far + near + lines[one][two]) / 2;
+			max_len = max(max_len, len);
+			if(print) printf("one: %d, two: %d, near: %2f, far: %2f, len: %2f, max_len: %2f\n", one, two, near, far, len, max_len);
 
 		}
-		cout << s << " 에서 시작하는 최대 시간: " << max_len << endl;
+		if (print) cout << s << " 에서 시작하는 최대 시간: " << max_len << endl;
 		ans = min(ans, max_len);
-		cout << "현재ans: " << ans << endl;
+		if (print) cout << "현재ans: " << ans << endl;
 	}
+	cout << fixed;
+	cout.precision(1);
 	cout << ans << endl;
 	return 0;
 }

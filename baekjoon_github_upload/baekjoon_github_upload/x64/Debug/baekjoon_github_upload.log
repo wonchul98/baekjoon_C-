@@ -1,7 +1,4 @@
-﻿  13141.cpp
-C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\13141.cpp(60,17): warning C4305: '초기화 중': 'int'에서 'float'(으)로 잘립니다.
-C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\13141.cpp(68,23): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\13141.cpp(69,22): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\13141.cpp(72,23): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\13141.cpp(73,22): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  baekjoon_github_upload.vcxproj -> C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\x64\Debug\baekjoon_github_upload.exe
+﻿  13141_new.cpp
+C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\13141_new.cpp(70,22): warning C4477: 'printf' : 서식 문자열 '%2f'에 'double' 형식의 인수가 필요하지만 variadic 인수 3의 형식이 '__int64'입니다.
+C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\13141_new.cpp(70,22): warning C4477: 'printf' : 서식 문자열 '%2f'에 'double' 형식의 인수가 필요하지만 variadic 인수 4의 형식이 '__int64'입니다.
+  baekjoon_github_upload.vcxproj -> C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\x64\Debug\baekjoon_github_upload.exe
