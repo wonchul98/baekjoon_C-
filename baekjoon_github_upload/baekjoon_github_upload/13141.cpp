@@ -1,44 +1,54 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define INF 987654321
+#define ll long long
 #include<iostream>
 #include<vector>
 #include<algorithm>
 using namespace std;
-bool print = true;
+bool print = false;
 int N, M;
-int lines[201][201];
 int dist[201][201];
-vector<pair<int, int>> gen_lines;
-
-int main() {
-	freopen("input/13141_input.txt", "r", stdin);
-	cin >> N >> M;
-	for (int i = 0; i < M; i++) {
-		int start, end, length;
-		cin >> start >> end >> length;
-		gen_lines.push_back(make_pair(start, end));
-		lines[start][end] = min(length, lines[start][end]);
-		lines[end][start] = min(length, lines[end][start]);
-		
-	}
-
-	for (int i = 1; i <= N; i++) {
-		for (int j = 1; j <= N; j++) {
-			if (i == j) dist[i][j] = 0;
-			else if(lines[i][j]) dist[i][j] = lines[i][j];
-			else dist[i][j] = INF; //간선이 없는 경우
-		}
-	}
+struct INFO {
+	int S, E, L;
+};
+vector<INFO> lines(20000);
+void print_dist() {
 	if (print) {
 		cout << "dist배열 " << endl;
 		for (int s = 1; s <= N; s++) {
 			for (int e = 1; e <= N; e++) {
-				if (dist[s][e] == 987654321) cout << "X ";
+				if (dist[s][e] == INF) cout << "X ";
 				else cout << dist[s][e] << " ";
 			}
 			cout << "\n";
 		}
 	}
+}
+
+
+
+int main() {
+	freopen("input/13141_input.txt", "r", stdin);
+	cin >> N >> M;
+
+	for (int i = 0; i < M; i++) {
+		int start, end, length;
+		cin >> start >> end >> length;
+		lines[i].S = start;
+		lines[i].E = end;
+		lines[i].L = length;
+	}
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= N; j++) {
+			if (i == j) dist[i][j] = 0;
+			else dist[i][j] = INF; //간선이 없는 경우
+		}
+	}
+	for (int i = 0; i < M; i++) {
+		dist[lines[i].S][lines[i].E] = min(dist[lines[i].S][lines[i].E], lines[i].L);
+		dist[lines[i].E][lines[i].S] = min(dist[lines[i].S][lines[i].E], lines[i].L);
+	}
+	print_dist();
 	for (int m = 1; m <= N; m++) {
 		for (int s = 1; s <= N; s++) {
 			for (int e = 1; e <= N; e++) {
@@ -46,34 +56,17 @@ int main() {
 			}
 		}
 	}
-	if (print) {
-		for (int s = 1; s <= N; s++) {
-			for (int e = 1; e <= N; e++) {
-				if (dist[s][e] == 987654321) cout << "X" << endl;
-				else cout << dist[s][e] << " ";
-			}
-			cout << "\n";
-		}
-	}
-	float ans = INF;
+	print_dist();
+	ll ans = INF;
 	for (int s = 1; s <= N; s++) {
-		float max_len = 0;
+		ll max_len = 0;
+		if (print) cout << "starting point: " << s << endl;
 		for (int i = 0; i < M; i++) {
-			int one = gen_lines[i].first;
-			int two = gen_lines[i].second;
-			float near, far;
-			if (dist[s][one] > dist[s][two]) {
-				near = dist[s][two];
-				far = dist[s][one];
-			}
-			else {
-				near = dist[s][one];
-				far = dist[s][two];
-			}
-			float len = (far + near + lines[one][two]) / 2;
+			int one = lines[i].S;
+			int two = lines[i].E;
+			ll len = (dist[s][one] + dist[s][two] + lines[i].L);
 			max_len = max(max_len, len);
-			if(print) printf("one: %d, two: %d, near: %2f, far: %2f, len: %2f, max_len: %2f\n", one, two, near, far, len, max_len);
-
+			if (print) printf("one: %d, two: %d, len: %2f, max_len: %2f\n", one, two, len, max_len);
 		}
 		if (print) cout << s << " 에서 시작하는 최대 시간: " << max_len << endl;
 		ans = min(ans, max_len);
@@ -81,6 +74,6 @@ int main() {
 	}
 	cout << fixed;
 	cout.precision(1);
-	cout << ans << endl;
+	cout << ans / 2 << "." << (ans%2) * 5;
 	return 0;
 }
