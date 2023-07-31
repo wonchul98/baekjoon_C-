@@ -46,3 +46,10 @@
 
 # Visual C++ cache files
 ipch/
+
+#other
+*.vsidx
+*.suo
+*.db
+*.ipch
+*.db-wal
