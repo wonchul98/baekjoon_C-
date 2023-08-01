@@ -1,4 +1,2 @@
-﻿  1854.cpp
-C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\1854.cpp(79,21): warning C4477: 'printf' : 서식 문자열 '%d'에 'int' 형식의 인수가 필요하지만 variadic 인수 3의 형식이 'unsigned __int64'입니다.
-C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\baekjoon_github_upload\1854.cpp(79,21): message : 서식 문자열에서 '%zd'을(를) 사용하는 것이 좋습니다.
-  baekjoon_github_upload.vcxproj -> C:\Users\Administrator\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\x64\Debug\baekjoon_github_upload.exe
+﻿  9376.cpp
+  baekjoon_github_upload.vcxproj -> C:\Users\shinw\source\repos\baekjoon_C++\baekjoon_C-\baekjoon_github_upload\x64\Debug\baekjoon_github_upload.exe
