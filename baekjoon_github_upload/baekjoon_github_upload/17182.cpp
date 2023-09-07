@@ -68,6 +68,4 @@ void DFS(int start, int cost) {
 		DFS(next, next_cost);
 		visited[next] = false;
 	}
-	
-	
 }
