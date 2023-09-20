@@ -1,116 +1,97 @@
-#define _CRT_SECURE_NO_WARNINGS
-
+#define INF 987654321
 #include<iostream>
-#include<algorithm>
-
 using namespace std;
+int map[12][12] = { 0, };
 
-int max_size = 0;
-
-int size_map[10][10] = { 0, };
-int map[10][10] = { 0, };
-int visited[10][10] = { 0, };
-int cnt[6] = { 0, 5,5,5,5,5 };
-int ans = 0;
-int min_ans = 987654321;
-bool flag = false;
-int bigger(int a, int b);
-void attach(int a, int b, int size);
-void detach(int a, int b, int size);
-void dfs();
-bool fill();
-
+bool able(int x, int y, int size);
+void dfs(int x, int y, int cnt);
+void fill(int x, int y, int size, int dest);
+int num[6] = { 0,5,5,5,5,5 };
+int min_count = INF;
+void print_map();
+int blank = 0;
 int main() {
-	freopen("17136_input/input.txt", "r", stdin);
-	int input;
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			cin >> input;
-			map[i][j] = input;
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	for (int i = 1; i <= 10; i++) {
+		for (int j = 1; j <= 10; j++) {
+			cin >> map[i][j];
+			if (map[i][j]) blank++;
 		}
 	}
-	if (fill()) {
-		cout << "0" << endl;
-		return 0;
-	}
-	dfs();
-	if (flag)cout << min_ans << endl;
-	else cout << "-1" << endl;
+	dfs(1, 1, 0);
+	if (min_count == INF) cout << "-1" << endl;
+	else cout << min_count << endl;
+	return 0;
 }
 
-int bigger(int a, int b) { //색종이의 최대 사이즈 리턴
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j <= i; j++) {
-			if (!map[a + j][b + i] ||visited[a+j][b+i] || !map[a+i][b+j] || visited[a+i][b+j]) { //하나라도 다르다면
-				return i; //i는 size임
-			}
-		}
-	}
-}
-
-void attach(int a, int b, int size) {
-	ans++;
-	cnt[size]--;
+bool able(int x, int y, int size) {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			visited[a + i][b + j] = 1;
+			if (map[x + i][y + j] == 0) return false;
 		}
 	}
+	//printf("able (%d, %d), size: %d\n", x, y, size);
+	return true;
 }
 
-void detach(int a, int b, int size) {
-	ans--;
-	cnt[size]++;
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			visited[a + i][b + j] = 0;
-		}
-	}
-}
-
-void dfs() {
-	if (min_ans < ans) return;
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			if (map[i][j] && !visited[i][j]) {
-				int able = bigger(i,j);
-				while(1){
-					if (cnt[able] >= 1 && able > 0) {//붙일 색종이가 있다면
-						//cout << "i: " << i << " j: " << j << " able: " << able << endl;
-						attach(i, j, able); //해당 위치에 색종이 붙임
-						//cout << "cnt: ";
-						for (int i = 1; i < 6; i++) {
-							//cout << cnt[i] << " ";
-						}
-						//cout << endl;
-						if (fill()) {
-							flag = true;
-							//cout << "filled" << endl;
-							min_ans = min(min_ans, ans);
-						}
+void dfs(int x, int y, int cnt) {
+	bool flag = false;
+	if (cnt >= min_count) return;
+	//printf("dfs(%d, %d, %d)\n", x, y, cnt);
+	for (int i = 0; i <= 10; i++) {
+		for (int j = 0; j <= 10; j++) {
+			//cout << i << j << endl;
+			if (map[i][j] == 1) {
+				flag = true;
+				//cout << "i: " << i << " j: " << j << endl;
+				
+				for (int size = 5; size >= 1; size--) {
+					if (num[size] <= 0 || x + size - 1 > 10 || y + size - 1 > 10)continue;
+					if (able(i, j, size)) {
+						//cout << "num: " << num[size] << endl;
+						fill(i, j, size, 0);
+						blank -= size * size;
+						dfs(x, y, cnt + 1);
+						fill(i, j, size, 1);
+						blank += size * size;
 						
-						dfs();
-						detach(i, j, able);//리턴이 됐다면 땐다
-					}
-					able--;//사이즈 줄임
-					if (able == 0) {
-						//cout << "back_tracking" << endl;
-						return; // 붙일 수 있는 색종이가 없는 경우 리턴
 					}
 				}
+
 			}
+			if (flag) break;
 		}
+		if (flag) break;
 	}
+	//cout << "cant go" << endl;
+	//여기 온다는 것은 붙일게 남아있는데 못붙이거나 다 붙였다는 뜻
+	if (blank==0) {
+		//cout << "filled" << endl;
+		min_count = min(cnt, min_count);
+	}
+	return;
+	
 }
 
-bool fill() {
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 10; j++) {
-			if (map[i][j] && !visited[i][j]) {
-				//printf("%d, %d is not filled yet\n", i, j);
-				return false;
-			}
+void fill(int x, int y, int size, int dest) {
+	//printf("fill: x: %d, y: %d, size: %d, dest: %d\n", x, y, size, dest);
+	if (dest == 0) num[size]--; //1을 0으로 만들며 색종이 소모
+	else num[size]++;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			map[x + i][y + j] = dest;
 		}
 	}
-	return true;
+	//print_map();
+}
+
+
+void print_map() {
+	for (int i = 1; i <= 10; i++) {
+		for (int j = 1; j <= 10; j++) {
+			cout.width(3);
+			cout << map[i][j];
+		}
+		cout << "\n";
+	}
 }
