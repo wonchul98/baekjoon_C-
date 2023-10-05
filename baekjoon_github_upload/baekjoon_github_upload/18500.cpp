@@ -11,7 +11,7 @@ vector<pair<int, int>> make;
 int R, C, N;
 int dx[4] = { 1,-1,0,0 };
 int dy[4] = { 0,0,-1,1 };
-bool print = true;
+bool print = false;
 bool connected = false;
 
 char map[101][101];
@@ -214,5 +214,19 @@ void print_map() {
 void get_min_dist() {
 	min_dist = INF;
 	if (print) cout << "get_min_dist()" << endl;
-	while(!del.empty() )
+	for (int i = 0; i < del.size(); i++) {
+		int now_x = del[i].first;
+		int now_y = del[i].second;
+		int save_x = now_x;
+		now_x++;
+		while (1) {
+			if(print) cout << "now_x: " << now_x << endl;
+			if ((map[now_x][now_y] == 'x' && !visited[now_x][now_y]) || now_x > R) {
+				min_dist = min(min_dist, now_x - save_x - 1);
+				break;
+			}
+			now_x++;
+		}
+	}
+	if (print) cout << "min_dist: " << min_dist << endl;
 }
