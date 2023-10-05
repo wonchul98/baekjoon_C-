@@ -36,6 +36,8 @@ int main() {
 	}
 	cin >> N;
 	for (int i = 0; i < N; i++) {
+		bool move1 = false;
+		bool move2 = false;
 		connected = false;
 		while (!del.empty()) del.pop_back();
 		while (!make.empty()) make.pop_back();
@@ -66,11 +68,16 @@ int main() {
 				dfs(h, start + 1);
 				//아래로 내리는 과정
 				if (!connected) {
+					move1 = true;
 					get_min_dist();
 					if (min_dist != INF) go_down();
 				}
 			}
-			if (h - 1 >= 1 && map[h - 1][start] == 'x' && connected) {
+			if (h - 1 >= 1 && map[h - 1][start] == 'x' && !move1) {
+				for (int j = 1; j <= R; j++) {
+					for (int k = 1; k <= C; k++)
+						visited[j][k] = false;
+				}
 				connected = false;
 				while (!del.empty()) del.pop_back();
 				for (int j = 1; j <= R; j++) {
@@ -78,6 +85,20 @@ int main() {
 						visited[j][k] = false;
 				}
 				dfs(h - 1, start);
+				if (!connected) {
+					move2 = true;
+					get_min_dist();
+					if (min_dist != INF) go_down();
+				}
+			}
+			if (!move1 && !move2 && map[h + 1][start] == 'x') {
+				connected = false;
+				while (!del.empty()) del.pop_back();
+				for (int j = 1; j <= R; j++) {
+					for (int k = 1; k <= C; k++)
+						visited[j][k] = false;
+				}
+				dfs(h + 1, start);
 				if (!connected) {
 					get_min_dist();
 					if (min_dist != INF) go_down();
@@ -97,11 +118,12 @@ int main() {
 				dfs(h, start - 1);
 				//아래로 내리는 과정
 				if (!connected) {
+					move1 = true;
 					get_min_dist();
 					if (min_dist != INF) go_down();
 				}
 			}
-			if (h - 1 >= 1 && map[h - 1][start] == 'x' && connected) {
+			if (h - 1 >= 1 && map[h - 1][start] == 'x' && !move1) {
 				connected = false;
 				while (!del.empty()) del.pop_back();
 				for (int j = 1; j <= R; j++) {
@@ -110,9 +132,23 @@ int main() {
 				}
 				dfs(h - 1, start);
 				if(!connected){
-				get_min_dist();
-				if (min_dist != INF) go_down();
+						move2 = true;
+					get_min_dist();
+					if (min_dist != INF) go_down();
 				}       
+			}
+			if (!move1 && !move2 && map[h + 1][start] == 'x') {
+				connected = false;
+				while (!del.empty()) del.pop_back();
+				for (int j = 1; j <= R; j++) {
+					for (int k = 1; k <= C; k++)
+						visited[j][k] = false;
+				}
+				dfs(h + 1, start);
+				if (!connected) {
+					get_min_dist();
+					if (min_dist != INF) go_down();
+				}
 			}
 		}
 		if (print) print_map();
@@ -178,26 +214,5 @@ void print_map() {
 void get_min_dist() {
 	min_dist = INF;
 	if (print) cout << "get_min_dist()" << endl;
-	vector<pair<int, int>> bottom;
-	for (int i = 1; i <= C; i++) {
-		for (int j = R; j >= 1; j--) {
-			if (visited[j][i] && map[j+1][i]) {
-				bottom.push_back(make_pair(j, i));
-				if (print)cout << "push: " << j << " " << i << endl;
-				break;
-			}
-		}
-	}
-	while (!bottom.empty()) {
-		int now_x = bottom.back().first;
-		int now_y = bottom.back().second;
-		int save_x = now_x;
-		if (print) cout << "save_x: " << save_x << "now_y: " << now_y << endl;
-		now_x++;
-		while (now_x <= R && map[now_x][now_y] != 'x') now_x++;
-		if (print) cout << "now_x: " << now_x << endl;
-		min_dist = min(min_dist, now_x - save_x - 1);
-		bottom.pop_back();
-	}
-	if (print) cout << "min_dist: " << min_dist << endl;
+	while(!del.empty() )
 }
